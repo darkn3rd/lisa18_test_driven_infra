@@ -1,0 +1,9 @@
+[mysqld]
+
+<% node['ez_mysql']['security'].each do |sec_setting, value| -%>
+  <% if value && (!!value == value) # We do have a value and it is a boolean -%>
+<%= sec_setting if value %>
+  <% else -%>
+<%= "#{sec_setting} = #{value}" if value  %>
+  <% end %>
+<% end %>

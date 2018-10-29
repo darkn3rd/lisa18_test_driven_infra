@@ -1,0 +1,22 @@
+---
+- name: Install MySQL Python Lib
+  apt:
+    name: python-pymysql
+    state: present
+
+- name: Create a new database for WordPress
+  mysql_db:
+    name: "{{ ez_mysql.database.dbname }}"
+    state: present
+    login_user: "{{ ez_mysql.database.root_username }}"
+    login_password: "{{ ez_mysql.database.root_password }}"
+
+- name: Create a new user for WordPress
+  mysql_user:
+    name: "{{ ez_mysql.database.admin_username }}"
+    password: "{{ ez_mysql.database.admin_password }}"
+    host: localhost
+    priv: "{{ ez_mysql.database.dbname }}.*:ALL"
+    state: present
+    login_user: "{{ ez_mysql.database.root_username }}"
+    login_password: "{{ ez_mysql.database.root_password }}"

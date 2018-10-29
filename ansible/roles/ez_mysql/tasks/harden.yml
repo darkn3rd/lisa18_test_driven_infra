@@ -1,0 +1,9 @@
+---
+- name: Secure MySQL configuration
+  template:
+    src: security.cnf.j2
+    dest: "{{ ez_mysql.securty_conf }}"
+    owner: "{{ ez_mysql.user }}"
+    mode: 0750
+  notify:
+   - reload mysql

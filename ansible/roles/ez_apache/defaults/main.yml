@@ -1,0 +1,8 @@
+---
+# defaults file for ez_apache
+ez_apache:
+  package: apache2
+  service: apache2
+  dir: /etc/apache2/
+  mods_available: /etc/apache2/mods-available/
+  conf_enabled: /etc/apache2/conf-enabled/

@@ -1,0 +1,6 @@
+---
+# tasks file for ez_apache
+- include: install.yml
+- include: config.yml
+- include: service.yml
+- include: harden.yml

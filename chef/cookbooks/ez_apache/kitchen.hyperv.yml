@@ -1,0 +1,23 @@
+---
+driver:
+  name: vagrant
+  provider: hyperv
+
+provisioner:
+  name: chef_zero
+  log_level: <%= ENV['CHEF_LOG_LEVEL'] || "auto" %>
+  
+verifier:
+  name: inspec
+
+platforms:
+  - name: ubuntu-16.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[ez_apache::default]
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:

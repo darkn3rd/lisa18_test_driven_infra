@@ -1,0 +1,6 @@
+---
+- name: "Install Apache package"
+  apt:
+    name: "{{ ez_apache.package }}"
+    state: present
+    update_cache: yes

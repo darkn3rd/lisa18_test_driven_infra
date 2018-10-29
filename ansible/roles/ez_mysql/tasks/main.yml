@@ -1,0 +1,6 @@
+---
+# tasks file for ez_mysql
+- include: install.yml
+- include: service.yml
+- include: database.yml
+- include: harden.yml

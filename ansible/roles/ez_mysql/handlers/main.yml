@@ -1,0 +1,6 @@
+---
+# handlers file for ez_mysql
+- name: reload mysql
+  service:
+    name: "{{ ez_mysql.service }}"
+    state: reloaded

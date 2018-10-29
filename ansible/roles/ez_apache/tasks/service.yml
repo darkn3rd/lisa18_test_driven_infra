@@ -1,0 +1,15 @@
+---
+- name: Start/Enable Apache Service (Docker)
+  service:
+    name: "{{ ez_apache.service }}"
+    state: started
+    enabled: yes
+    use: service
+  when: ohai_virtualization.system == "docker"
+
+- name: Start/Enable Apache Service (Regular)
+  service:
+    name: "{{ ez_apache.service }}"
+    state: started
+    enabled: yes
+  when: ohai_virtualization.system != "docker"

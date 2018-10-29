@@ -1,0 +1,26 @@
+---
+# defaults file for ez_mysql
+ez_mysql:
+  package: "mysql-server"
+  service: mysql
+  user: mysql
+  database:
+    dbname: wordpress
+    host: 127.0.0.1
+    root_username: root
+    admin_username: wordpress
+    # bad Practice - demo only
+    root_password: Ch4ng3me
+    admin_password: wordpress
+  securty_conf: /etc/mysql/conf.d/security.cnf
+  # better practice
+  security:
+    chroot: ""
+    safe-user-create: 1
+    secure-auth: 1
+    skip-symbolic-links: 1
+    skip-show-database: ""
+    local-infile: 0
+    allow-suspicious-udfs: 0
+    automatic-sp-privileges: 0
+    secure-file-priv: /tmp
