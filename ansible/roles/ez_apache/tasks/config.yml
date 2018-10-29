@@ -1,0 +1,27 @@
+---
+- name: "Copy mpm_event.conf"
+  copy:
+    src: "{{ role_path }}/files/mpm_event.conf"
+    dest: "{{ ez_apache.mods_available }}/mpm_event.conf"
+  notify:
+    - reload apache
+
+- name: "Remove Apache modules"
+  apache2_module:
+    name: "{{ item }}"
+    state: absent
+  with_items:
+    - mpm_prefork
+    - mpm_worker
+  notify:
+    - reload apache
+
+- name: "Remove Apache modules"
+  apache2_module:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - mpm_event
+    - rewrite
+  notify:
+   - reload apache

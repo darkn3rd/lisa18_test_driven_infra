@@ -1,0 +1,28 @@
+---
+driver:
+  name: docker
+
+provisioner:
+  name: chef_zero
+  log_level: <%= ENV['CHEF_LOG_LEVEL'] || "auto" %>
+
+verifier:
+  name: inspec
+  sudo: true
+
+platforms:
+  - name: ubuntu-16.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[ez_mysql::default]
+    verifier:
+      inspec_tests:
+        - test/integration/default
+      attributes:
+        service_type: sysv
+    attributes:
+      ez_mysql:
+        database:
+          root_password: 'iloverandompasswordsbutthiswilldo'

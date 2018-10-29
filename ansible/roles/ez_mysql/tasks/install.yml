@@ -1,0 +1,26 @@
+---
+- name: Check if "{{ ez_mysql.package }}" is installed
+  command: dpkg-query -l "{{ ez_mysql.package }}"
+  register: deb_check
+  ignore_errors: yes
+
+- name: Install MySQL
+  block:
+
+  - name: Configure MySQL DebConf Questions
+    debconf:
+      name: "{{ ez_mysql.package }}"
+      question: "{{ ez_mysql.package }}/{{ item }}"
+      value: "{{ ez_mysql.database.root_password }}"
+      vtype: password
+    with_items:
+      - root_password
+      - root_password_again
+
+  - name: Install MySQL package
+    apt:
+      name: "{{ ez_mysql.package }}"
+      state: present
+      update_cache: yes
+
+  when: deb_check.rc != 0

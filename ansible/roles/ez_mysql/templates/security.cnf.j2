@@ -1,0 +1,4 @@
+[mysqld]
+{% for (sec_setting, value) in ez_mysql.security.iteritems() %}
+{{ sec_setting }} = {{ value }}
+{% endfor %}

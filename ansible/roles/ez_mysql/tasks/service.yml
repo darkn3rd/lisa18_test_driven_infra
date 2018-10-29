@@ -1,0 +1,14 @@
+---
+- name: Start/Enable MySQL Service (Docker)
+  sysvinit:
+    name: "{{ ez_mysql.service }}"
+    state: started
+    enabled: yes
+  when: ohai_virtualization.system == "docker"
+
+- name: Start/Enable MySQL Service
+  service:
+    name: "{{ ez_mysql.service }}"
+    state: started
+    enabled: yes
+  when: ohai_virtualization.system != "docker"

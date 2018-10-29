@@ -1,0 +1,6 @@
+default['ez_apache']['package'] = 'apache2'
+default['ez_apache']['service'] = 'apache2'
+default['ez_apache']['docroot'] = '/var/www/html'
+default['ez_apache']['mods-available'] = '/etc/apache2/mods-available/'
+default['ez_apache']['conf-enabled'] = '/etc/apache2/conf-enabled/'
+default['ez_apache']['dir'] = '/etc/apache2/'

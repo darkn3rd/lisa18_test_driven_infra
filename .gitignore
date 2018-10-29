@@ -1,0 +1,25 @@
+.vagrant
+*~
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
+
+# test kitchen
+.kitchen/
+.kitchen.local.yml
+.kitchen.yml
+
+# Ansible
+*.retry
+*.pyc
+.pytest_cache/
+
+# Chef
+Berksfile.lock
+.zero-knife.rb
+Policyfile.lock.json
+
+# Mac
+.DS_Store

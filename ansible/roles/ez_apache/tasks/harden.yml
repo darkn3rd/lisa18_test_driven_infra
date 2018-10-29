@@ -1,0 +1,16 @@
+---
+- name: "Secure Apache Config Directory"
+  file:
+    path: "{{ ez_apache.dir }}"
+    mode: 0751
+
+- name: "Secure Apache Configuration"
+  file:
+    path: "{{ ez_apache.dir }}/apache2.conf"
+    mode: 0640
+
+- name: "Secure Apache Server Token"
+  lineinfile:
+    path: "{{ ez_apache.conf_enabled }}/security.conf"
+    regexp: '^ServerTokens .*$'
+    line: 'ServerTokens Prod'

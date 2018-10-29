@@ -1,0 +1,6 @@
+---
+# handlers file for ez_apache
+- name: reload apache
+  service:
+    name: "{{ ez_apache.service }}"
+    state: reloaded

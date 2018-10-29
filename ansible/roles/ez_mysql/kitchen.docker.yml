@@ -1,0 +1,37 @@
+---
+driver:
+  name: docker
+
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  require_ansible_repo: true
+  require_ansible_omnibus: false
+  ansible_verbose: true
+  ansible_verbosity: <%= ENV['ANSIBLE_VERBOSITY'] || 1 %>
+  ansible_diff: true
+  ansible_cfg_path: test/integration/default/ansible.cfg
+  roles_path: ../../roles
+  require_chef_for_busser: true
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: ubuntu-16.04
+    transport:
+      max_ssh_sessions: 6
+
+suites:
+  - name: default
+    verifier:
+      inspec_tests:
+        - test/integration/default
+      attributes:
+        service_type: sysv
+    provisioner:
+      # these are merged w/ defaults b/c ansible.cfg settings
+      extra_vars:
+        ez_mysql:
+          database:
+            root_password: 'iloverandompasswordsbutthiswilldo'
