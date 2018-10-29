@@ -29,6 +29,7 @@ kitchen login
 
 ```bash
 export KITCHEN_YAML=kitchen.docker.yml
+chmod 600 .kitchen/docker_id_rsa
 kitchen create
 kitchen login
 ```
@@ -37,6 +38,8 @@ kitchen login
 
 ```bash
 export KITCHEN_YAML=<YOUR_ENVIRONMENT_GOES_HERE>
+export CHEF_LOG_LEVEL="auto" # optional
+kitchen create
 kitchen converge  # apply change config scripts
 kitchen verify    # test the config
 ```

@@ -8,7 +8,7 @@ provisioner:
   require_ansible_repo: true
   require_ansible_omnibus: false
   ansible_verbose: true
-  ansible_verbosity: 1
+  ansible_verbosity: <%= ENV['ANSIBLE_VERBOSITY'] || 1 %>
   ansible_diff: true
   roles_path: ../../roles
   require_chef_for_busser: true

@@ -1,38 +1,73 @@
-Role Name
+ez_mysql
 =========
 
-A brief description of the role goes here.
+EZ MySQL is a simple cookbook that installs MySQL server with databases required to run WordPress.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
-Role Variables
---------------
-
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
-------------
-
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Only tested on Ubuntu 16.04
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
+    - hosts: all
+      become: true
       roles:
-         - { role: username.rolename, x: 42 }
+         - ez_mysql
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Joaquín Menchaca
+
+
+Test Kitchen
+============
+
+This has been tested with Docker and Vagrant using Virtualbox or Hyper-V.  To try out the systems do the following:
+
+Windows / Vagrant / Hyper-V
+---------------------------
+On Windows 10, Microsoft might install a broken version of OpenSSH that will break if you have a `$home/.ssh/config`.  Recommend disabling this feature, and use Hashicorp's embedded ssh.
+
+```PowerShell
+$env:KITCHEN_YAML = "kitchen.hyperv.yml"
+kitchen create
+$env:Path += ";C:\HashiCorp\Vagrant\embedded\usr\bin"
+kitchen login
+```
+
+MacOS X / Vagrant / Virtualbox
+-------------------------------
+
+```bash
+export KITCHEN_YAML=kitchen.vbox.yml
+kitchen create
+kitchen login
+```
+
+Docker
+------
+
+
+```bash
+export KITCHEN_YAML=kitchen.docker.yml
+kitchen create
+chmod 600 .kitchen/docker_id_rsa
+kitchen login
+```
+
+Running Test Kitchen
+====================
+```bash
+export KITCHEN_YAML=<YOUR_ENVIRONMENT_GOES_HERE>
+kitchen create
+kitchen converge  # apply change config scripts
+kitchen verify    # test the config
+```

@@ -20,3 +20,6 @@
 Berksfile.lock
 .zero-knife.rb
 Policyfile.lock.json
+
+# Mac
+.DS_Store

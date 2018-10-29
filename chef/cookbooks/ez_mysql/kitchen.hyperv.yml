@@ -6,7 +6,7 @@ driver:
 provisioner:
   name: chef_zero
   log_level: <%= ENV['CHEF_LOG_LEVEL'] || "auto" %>
-  
+
 verifier:
   name: inspec
 
@@ -21,3 +21,6 @@ suites:
       inspec_tests:
         - test/integration/default
     attributes:
+      ez_mysql:
+        database:
+          root_password: 'iloverandompasswordsbutthiswilldo'

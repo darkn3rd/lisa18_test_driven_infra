@@ -1,6 +1,6 @@
 # ez_mysql
 
-EZ Apache is a simple cookbook that installs Apache server with settings required to run WordPress.
+EZ MySQL is a simple cookbook that installs MySQL server with databases required to run WordPress.
 
 # Test Kitchen
 
@@ -30,6 +30,7 @@ kitchen login
 ```bash
 export KITCHEN_YAML=kitchen.docker.yml
 kitchen create
+chmod 600 .kitchen/docker_id_rsa
 kitchen login
 ```
 
@@ -37,6 +38,7 @@ kitchen login
 
 ```bash
 export KITCHEN_YAML=<YOUR_ENVIRONMENT_GOES_HERE>
+kitchen create
 kitchen converge  # apply change config scripts
 kitchen verify    # test the config
 ```

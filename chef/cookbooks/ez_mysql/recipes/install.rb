@@ -17,8 +17,12 @@ type = 'password'
 %w(root_password root_password_again).each do |question|
   execute "Set DebConf Question for MySQL question:'#{pkg}/#{question}'" do
     command "echo '#{pkg} #{pkg}/#{question} #{type} #{val}' | debconf-set-selections"
+    not_if "dpkg-query -l #{node['ez_mysql']['package']}"
   end
 end
 
 # Install Package
-package pkg
+package pkg do
+  action :install
+  not_if "dpkg-query -l #{node['ez_mysql']['package']}"
+end

@@ -20,3 +20,6 @@ suites:
       inspec_tests:
         - test/integration/default
     attributes:
+      ez_mysql:
+        database:
+          root_password: 'iloverandompasswordsbutthiswilldo'

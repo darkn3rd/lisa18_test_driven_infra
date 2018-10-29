@@ -6,4 +6,4 @@
     owner: "{{ ez_mysql.user }}"
     mode: 0750
   notify:
-   - reload mysql
+   - restart mysql
