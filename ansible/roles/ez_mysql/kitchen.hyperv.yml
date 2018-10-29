@@ -1,6 +1,7 @@
 ---
 driver:
   name: vagrant
+  provider: hyperv
 
 provisioner:
   name: ansible_playbook
@@ -10,9 +11,10 @@ provisioner:
   ansible_verbose: true
   ansible_verbosity: 1
   ansible_diff: true
-  ansible_cfg_path: test/integration/default/ansible.cfg
+  ansible_cfg_path: ../../../inspec/ez_apache/test/integration/default/ansible.cfg
   roles_path: ../../roles
   require_chef_for_busser: true
+  playbook: ../../../inspec/ez_apache/test/integration/default/default.yml
 
 verifier:
   name: inspec
@@ -24,7 +26,7 @@ suites:
   - name: default
     verifier:
       inspec_tests:
-        - test/integration/default
+        - ../../../inspec/ez_apache/test/integration/default
     provisioner:
       extra_vars:
         ez_mysql:
