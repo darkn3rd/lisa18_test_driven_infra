@@ -75,7 +75,7 @@ end
 # control 'ez_apache-security-05' do
 #   impact 1.0
 #   title 'Disable TRACE-methods'
-#   desc 'The web server doesn’t allow TRACE request and help in blocking Cross Site Tracing attack.'
+#   desc 'The web server doesn't allow TRACE request and help in blocking Cross Site Tracing attack.'
 
 #   describe file(File.join(apache.conf_dir, '/conf-enabled/security.conf')) do
 #     its('content') { should match(/^\s*?TraceEnable\s+?Off/) }

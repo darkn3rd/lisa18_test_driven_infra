@@ -3,4 +3,4 @@
 - name: restart mysql
   service:
     name: "{{ ez_mysql.service }}"
-    state: restart
+    state: restarted
