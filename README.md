@@ -47,6 +47,7 @@ The host system will have to have  [Virualbox](https://www.virtualbox.org/) inst
 ```bash
 vagrant up
 vagrant ssh
+cd lisa18_test_driven_infra
 ```
 
 Note that this can take some time to download the Ubuntu 16.04 image initially.
@@ -59,7 +60,15 @@ If you have [HomeBrew](https://brew.sh/) installed, you can get the components u
 brew cask install docker
 brew tap chef/chef
 brew cask install chefdk
+
+# Local ChefDK Ruby Gems
 chef gem install kitchen-ansible
+chef gem install kitchen-docker
+
+# Get the project
+cd
+git clone https://github.com/darkn3rd/lisa18_test_driven_infra
+cd lisa18_test_driven_infra
 ```
 
 #### Installing Directly on Windows
@@ -67,11 +76,19 @@ chef gem install kitchen-ansible
 The Chef parts of this 
 If you have [Chocolatey](https://chocolatey.org/), you can get the components running:
 
-```bash
-choco insdtall docker-for-windows
+```PowerShell
+choco install docker-for-windows
 choco install chefdk
 refreshenv
+
+# ChefDK Ruby Gems
 chef gem install kitchen-ansible
+chef gem install kitchen-docker
+
+# Get the Project
+cd $home
+git clone https://github.com/darkn3rd/lisa18_test_driven_infra
+cd lisa18_test_driven_infra
 ```
 
 #### Installing Directly on Linux
@@ -81,33 +98,40 @@ Both Debian and RHEL family of distros will work.  Other Linux solutions can wor
 This is how you can get this installed on Ubuntu 16.04.
 
 ```bash
-  ##### Add Docker Repo
-  DOCKER_REPO="https://download.docker.com/linux/ubuntu"
-  curl -fsSL ${DOCKER_REPO}/gpg | apt-key add -
-  add-apt-repository \
-    "deb [arch=amd64] ${DOCKER_REPO} \
-    $(lsb_release -cs) \
-    stable"
-  apt-get update -qq
+##### Add Docker Repo
+DOCKER_REPO="https://download.docker.com/linux/ubuntu"
+curl -fsSL ${DOCKER_REPO}/gpg | sudo apt-key add -
+sudo add-apt-repository \
+  "deb [arch=amd64] ${DOCKER_REPO} \
+  $(lsb_release -cs) \
+  stable"
+sudo apt-get update -qq
 
-  ##### Prerequisites (just in case)
-  apt-get install -y \
-      apt-transport-https \
-      ca-certificates \
-      software-properties-common
+##### Prerequisites (just in case)
+sudo apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    software-properties-common
 
-  ##### Install Docker
-  apt-get install -y docker-ce
+##### Install Docker
+sudo apt-get install -y docker-ce
+sudo usermod -aG docker $USER
 
-  ##### ChefDK
-  VER=3.2.30
-  PKG=chefdk_${VER}-1_amd64.deb
-  PREFIX=https://packages.chef.io/files/stable/chefdk/${VER}
-  wget --quiet ${PREFIX}/ubuntu/16.04/${PKG}
-  dpkg -i ${PKG}
+##### ChefDK
+VER=3.2.30
+PKG=chefdk_${VER}-1_amd64.deb
+PREFIX=https://packages.chef.io/files/stable/chefdk/${VER}
+wget --quiet ${PREFIX}/ubuntu/16.04/${PKG}
+sudo dpkg -i ${PKG}
 
-  ##### Kitchen-Ansible
-  chef gem install kitchen-ansible
+# Local ChefDK Ruby Gems
+chef gem install kitchen-ansible
+chef gem install kitchen-docker
+
+# Get the project
+cd
+git clone https://github.com/darkn3rd/lisa18_test_driven_infra
+cd lisa18_test_driven_infra
 ```
 
 ## Running the Tools
@@ -121,7 +145,7 @@ These instructions assume you are running it on the host and from the current di
 ### Testing Apache2 configured by Chef
 
 ```bash
-pushd chef/cookboks/ez_apache
+pushd chef/cookbooks/ez_apache
 export KITCHEN_YAML=kitchen.docker.yml
 # Create test environment
 kitchen create
@@ -143,7 +167,7 @@ popd
 ### Testing MySQL configured by Chef
 
 ```bash
-pushd chef/cookboks/ez_mysql
+pushd chef/cookbooks/ez_mysql
 export KITCHEN_YAML=kitchen.docker.yml
 # Create test environment
 kitchen create

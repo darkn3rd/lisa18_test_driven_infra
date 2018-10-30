@@ -27,8 +27,9 @@
       software-properties-common
 
   ##### Install Docker
-  apt-get install docker-ce
-
+  apt-get install -y docker-ce
+  usermod -aG docker 'vagrant'
+  
   ##### ChefDK
   VER=3.2.30
   PKG=chefdk_${VER}-1_amd64.deb
@@ -36,8 +37,10 @@
   wget --quiet ${PREFIX}/ubuntu/16.04/${PKG}
   dpkg -i ${PKG}
 
-  ##### Kitchen-Ansible
-  chef gem install kitchen-ansible
+  ##### Kitchen-Ansible (vagrant context)
+  su - vagrant -c 'chef gem install kitchen-ansible'
+  su - vagrant -c 'chef gem install kitchen-docker'
+  su - vagrant -c 'git clone https://github.com/darkn3rd/lisa18_test_driven_infra.git'
 SCRIPT
 
 Vagrant.configure("2") do |config|
