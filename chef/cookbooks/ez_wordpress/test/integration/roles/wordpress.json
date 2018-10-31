@@ -1,0 +1,14 @@
+{
+    "name": "wordpress",
+    "description": "Installs WordPress with MySQL and Apache2",
+    "chef_type": "role",
+    "json_class": "Chef::Role",
+    "default_attributes": {
+    },
+    "override_attributes": {
+    },
+    "run_list": [
+        "recipe[ez_mysql]",
+        "recipe[ez_wordpress]"
+    ]
+}
