@@ -19,7 +19,7 @@ suites:
       - recipe[ez_apache::default]
     verifier:
       inspec_tests:
-        - test/integration/default
+        - ../../../inspec/ez_apache/test/integration
       attributes:
         service_type: sysv
     attributes:
