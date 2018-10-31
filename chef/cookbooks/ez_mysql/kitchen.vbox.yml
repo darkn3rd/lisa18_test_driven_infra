@@ -18,7 +18,7 @@ suites:
       - recipe[ez_mysql::default]
     verifier:
       inspec_tests:
-        - test/integration/default
+        - ../../../inspec/ez_mysql/test/integration
     attributes:
       ez_mysql:
         database:

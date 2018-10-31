@@ -6,7 +6,7 @@ driver:
 provisioner:
   name: chef_zero
   log_level: <%= ENV['CHEF_LOG_LEVEL'] || "auto" %>
-  
+
 verifier:
   name: inspec
 
@@ -19,5 +19,5 @@ suites:
       - recipe[ez_apache::default]
     verifier:
       inspec_tests:
-        - ../../../inspec/ez_apache/test/default
+        - ../../../inspec/ez_apache/test/integration
     attributes:
