@@ -25,3 +25,6 @@ template "#{node['wordpress']['dir']}/wp-config.php" do
   group 'www-data'
   action :create
 end
+
+# WordPress permalinks need to use Apache .htaccess files to work properly
+# sudo vim /etc/httpd/conf/httpd.conf

@@ -16,11 +16,14 @@ platforms:
 
 suites:
   - name: default
+    driver:
+      forward:
+        - 80:8080
     run_list:
       - recipe[ez_wordpress::default]
     verifier:
       inspec_tests:
-        - test/integration/default
+        - ../../../inspec/ez_wordpress/test/integration
       attributes:
         service_type: sysv
     attributes:
