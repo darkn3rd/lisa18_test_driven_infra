@@ -24,6 +24,7 @@ template "#{node['wordpress']['dir']}/wp-config.php" do
   owner 'www-data'
   group 'www-data'
   action :create
+  not_if { ::File.exist?("#{node['wordpress']['dir']}/wp-config.php") }
 end
 
 # WordPress permalinks need to use Apache .htaccess files to work properly

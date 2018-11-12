@@ -19,8 +19,10 @@ suites:
     driver:
       forward:
         - 80:8080
+    roles_path:
+        - ../../../inspec/ez_wordpress/test/integration/roles
     run_list:
-      - recipe[ez_wordpress::default]
+      - role[wordpress]
     verifier:
       inspec_tests:
         - ../../../inspec/ez_wordpress/test/integration/default

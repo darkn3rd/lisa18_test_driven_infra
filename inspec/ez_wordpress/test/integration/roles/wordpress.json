@@ -8,6 +8,7 @@
     "override_attributes": {
     },
     "run_list": [
+        "recipe[ez_apache]",
         "recipe[ez_mysql]",
         "recipe[ez_wordpress]"
     ]

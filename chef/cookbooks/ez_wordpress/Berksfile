@@ -3,3 +3,7 @@ source 'https://supermarket.chef.io'
 source chef_repo: '..'
 
 metadata
+
+group :integration do
+  cookbook 'ez_mysql', path: '../ez_mysql'
+end
