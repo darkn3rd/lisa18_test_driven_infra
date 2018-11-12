@@ -4,6 +4,12 @@
 #
 # Copyright:: 2018, Joaquin Menchaca, All Rights Reserved.
 
+# Main Confg to support .htaccess in /var/www
+cookbook_file "#{node['ez_apache']['dir']}/apache2.conf" do
+  source 'apache2.conf'
+  action :create
+end
+
 cookbook_file "#{node['ez_apache']['mods-available']}/mpm_event.conf" do
   source 'mpm_event.conf'
   action :create
