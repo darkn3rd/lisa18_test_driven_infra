@@ -23,7 +23,7 @@ suites:
       - recipe[ez_wordpress::default]
     verifier:
       inspec_tests:
-        - ../../../inspec/ez_wordpress/test/integration
+        - ../../../inspec/ez_wordpress/test/integration/default
       attributes:
         service_type: sysv
     attributes:

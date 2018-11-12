@@ -19,7 +19,7 @@ template "#{node['wordpress']['dir']}/wp-config.php" do
     auth_salt:         node['wordpress']['salt']['auth'],
     secure_auth_salt:  node['wordpress']['salt']['secure_auth'],
     logged_in_salt:    node['wordpress']['salt']['logged_in'],
-    nonce_salt:        node['wordpress']['salt']['nonce'],
+    nonce_salt:        node['wordpress']['salt']['nonce']
   )
   owner 'www-data'
   group 'www-data'

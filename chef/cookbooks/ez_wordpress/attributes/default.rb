@@ -1,6 +1,9 @@
 def generate_code(number)
-  charset = (0..9).to_a + ('a'..'z').to_a + ('A'..'Z').to_a + "!@#$%^&*()".split('').to_a
-  Array.new(number-1) { charset.sample }.join
+  charset = (0..9).to_a +
+            ('a'..'z').to_a +
+            ('A'..'Z').to_a +
+            '!@#$%^&*()'.split('').to_a
+  Array.new(number - 1) { charset.sample }.join
 end
 
 default['wordpress']['keys']['auth'] = generate_code(64)
@@ -17,10 +20,7 @@ default['wordpress']['db']['user'] = 'wordpress'
 default['wordpress']['db']['pass'] = 'wordpress'
 
 default['wordpress']['server_name'] = node['fqdn']
-default['wordpress']['dir'] = "/var/www/wordpress"
+default['wordpress']['dir'] = '/var/www/wordpress'
 default['wordpress']['url'] = 'https://wordpress.org/latest.tar.gz'
-
-
-
 
 # default['wordpress']['server_aliases'] = [node['fqdn']]

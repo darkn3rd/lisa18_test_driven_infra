@@ -1,6 +1,5 @@
 name 'ez_wordpress'
 maintainer 'Joaquin Menchaca'
-maintainer_email 'you@example.com'
 license 'MIT'
 description 'Installs/Configures ez_wordpress'
 long_description 'Installs/Configures ez_wordpress'
@@ -10,3 +9,6 @@ supports 'ubuntu', '= 16.04'
 
 depends 'ez_apache', '~> 0.1.0'
 depends 'tar', '~> 2.2.0'
+
+# ignore: ~FC064
+# ignore: ~FC065

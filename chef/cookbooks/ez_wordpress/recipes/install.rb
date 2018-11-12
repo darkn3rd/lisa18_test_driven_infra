@@ -10,7 +10,8 @@ apt_update 'Update the apt cache daily' do
 end
 
 # php prerequisites suitable for most WordPress features
-package %w(php7.0
+package %w(
+  php7.0
   libapache2-mod-php7.0
   php7.0-mcrypt
   php7.0-mysql
@@ -37,12 +38,8 @@ tar_extract node['wordpress']['url'] do
   user 'www-data'
   group 'www-data'
   tar_flags [ '--strip-components 1' ]
-  not_if { ::File.exists?("#{node['wordpress']['dir']}/index.php") }
+  not_if { ::File.exist?("#{node['wordpress']['dir']}/index.php") }
 end
-
-
-
-
 
 # touch /tmp/wordpress/.htaccess
 # chmod 660 wordpress/.htaccess

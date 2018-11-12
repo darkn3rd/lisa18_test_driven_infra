@@ -3,9 +3,9 @@
 # Inspec test for recipe ez_wordpress::default
 
 # This is an example test, replace it with your own test.
-describe port(80) do
-  it { should be_listening }
-end
+# describe port(80) do
+#   it { should be_listening }
+# end
 
 %w(php7.0
   libapache2-mod-php7.0
