@@ -29,7 +29,7 @@
   ##### Install Docker
   apt-get install -y docker-ce
   usermod -aG docker 'vagrant'
-  
+
   ##### ChefDK
   VER=3.2.30
   PKG=chefdk_${VER}-1_amd64.deb
@@ -43,9 +43,10 @@
   su - vagrant -c 'git clone https://github.com/darkn3rd/lisa18_test_driven_infra.git'
 SCRIPT
 
+@provider = ENV['VBOX_PROVIDER'] || RUBY_PLATFORM =~ /mingw32/ ? 'hyperv' : 'virtualbox'
+
 Vagrant.configure("2") do |config|
-  config.vm.provider "hyperv"
-  config.vm.provider "virtualbox"
+  config.vm.provider @provider
   config.vm.box = "bento/ubuntu-16.04"
   config.vm.hostname = "workstation.dev"
   config.vm.provision "shell", inline: @setup_script

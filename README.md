@@ -1,12 +1,12 @@
-# LISA18: Test Driven Infrastructure
+# **LISA18: Test Driven Infrastructure**
 
-## Introduction
+## **Introduction**
 
 Test Driven Infrastructure (_Compliance as Code_) is the process to design the infrastructure through tests.  
 
 The idea is that you would first experiment, model, and build out your infrastructure, and then build tests to certify that infrastructure works as designed. With this baseline, you can then create an infrastructure from nothing.
 
-## Topics
+## **Topics**
 
 In this material, we will build web-database services in two change configuration systems: Chef and Ansible, and then use InSpec to verify that these were created as desired.  We will turn three categories of tests:
 
@@ -14,11 +14,11 @@ In this material, we will build web-database services in two change configuratio
 * **Conformance Test** - a platform should meet the needs to host the application, e.g. apache modules required, mysql databases created, etc.
 * **Security Tests** - follow best practices to secure the application
 
-## Slide Deck 
+## **Slide Deck**
 
 * https://slides.com/devopsstudio/lisa18_tdi
 
-## Implementation
+## **Implementation Overview**
 
 Tools Used:
  * [InSpec](https://www.inspec.io/) - infrastructure compliance test tool
@@ -26,23 +26,24 @@ Tools Used:
  * [Chef](https://www.chef.io/chef/) - change configuration management that uses agents apply desired state
  * [Ansible](https://www.ansible.com/) - remote execution tool that does change configuration, infrastructure as code, and device configuration.
 
-## Guest Test Environments
+## **About Test Environments**
 
-These scripts require Linux guests to run, and so you need either virtualization solution or [Docker](https://www.docker.com/).  Test Kitchen by default uses [Vagrant](https://www.vagrantup.com/) to manage virtual machines, such as [Virualbox](https://www.virtualbox.org/) or [Hyper-V](https://en.wikipedia.org/wiki/Hyper-V).  
+These scripts are written explicitly for Ubuntu 16.04, so you will need either virtualization or [Docker](https://www.docker.com/).   Test Kitchen by default uses [Vagrant](https://www.vagrantup.com/) to manage virtual machines, such as [Virualbox](https://www.virtualbox.org/) or [Hyper-V](https://en.wikipedia.org/wiki/Hyper-V).  
 
-I recommend using [Docker](https://www.docker.com/) as it is faster than running full virtual machines, and more suitable for CI solution like [Jenkins](https://jenkins.io/).  
+I recommend using [Docker](https://www.docker.com/) as it is faster than running full virtual machines, and more suitable for CI solution like [Jenkins](https://jenkins.io/).
 
-Note that in this scenario, [Docker](https://www.docker.com/) is used as _virtual_ virtual machines, not the common application usage, where one process stands up the container.  Care has been taking to make sure the change configuration scripts and compliance test scripts detect and adjust for full virtual machine or a restricted container environment.
+In this scenario, [Docker](https://www.docker.com/) is used as _virtual_ virtual machines, not the common application usage, where one process stands up the container.  These scripts should work in either environment, and workaround common gotchas.
 
-## Host Worksation Setup
 
-The shortest path to get minimal needed is [Docker](https://www.docker.com/) and [ChefDK](https://downloads.chef.io/chefdk/). Once [ChefDK](https://downloads.chef.io/chefdk/) is installed, you will need to install kitchen-ansible plug-in for [Ansible](https://www.ansible.com/) support: `chef gem install kitchen-ansible`.
+## **Setup: Easy Way - Vagrant**
 
-Alternatively, I have created a small `Vagrantfile`, which can work to bring up a workstation suitable for running these tests.
+An easy way to run this is with a self-contained environment using  [Vagrant](http://vagrantup.com/).
 
-### Virtual Host Workstation Instructions
+This setup will use [Virualbox](https://www.virtualbox.org/), or [Hyper-V](https://en.wikipedia.org/wiki/Hyper-V) on Windows.  
 
-The host system will have to have  [Virualbox](https://www.virtualbox.org/) installed or [Hyper-V](https://en.wikipedia.org/wiki/Hyper-V).
+When running this the first time, it will take time to first download Ubuntu 16.04 vagrant box, and then subsequently install Docker and ChefDK. With Hyper-V, you'll be prompted to supply credentials, select virtual switch, etc.
+
+### **Steps**
 
 ```bash
 vagrant up
@@ -50,91 +51,44 @@ vagrant ssh
 cd lisa18_test_driven_infra
 ```
 
-Note that this can take some time to download the Ubuntu 16.04 image initially.
+### **Advanced: Alternative Providers**
 
-#### Installing Directly on Mac OS X
+If you elect to use an alternative Vagrant provider than the default configured, you can set the environment variable `VBOX_PROVIDER`.  These are not tested behaviors, so you may have to modify `Vagrantfile` with any provider specific adapations required.
 
-If you have [HomeBrew](https://brew.sh/) installed, you can get the components using:
+```shell
+# Windows PowerShell - use virtualbox
+$env:VBOX_PROVIDER = "virtualbox"
+# Linux - use libvrt
+export VBOX_PROVIDER="libvirt"
 
-```bash
-brew cask install docker
-brew tap chef/chef
-brew cask install chefdk
-
-# Local ChefDK Ruby Gems
-chef gem install kitchen-ansible
-chef gem install kitchen-docker
-
-# Get the project
-cd
-git clone https://github.com/darkn3rd/lisa18_test_driven_infra
+# bring environment up
+vagrant up
+vagrant ssh
 cd lisa18_test_driven_infra
 ```
 
-#### Installing Directly on Windows
+## **Setup: Hard Way**
 
-The Chef parts of this 
-If you have [Chocolatey](https://chocolatey.org/), you can get the components running:
+You can install the required tools the host on Windows, Linux, or macOS.  On Windows, the Ansible parts will not work for unknown reason.
 
-```PowerShell
-choco install docker-for-windows
-choco install chefdk
-refreshenv
+You will need to install the following:
 
-# ChefDK Ruby Gems
-chef gem install kitchen-ansible
-chef gem install kitchen-docker
+* **Virtualization Solution** (choose one or both):
+    * [Vagrant](https://www.vagrantup.com/)
+      * [Virualbox](https://www.virtualbox.org/)
+      * [Hyper-V](https://en.wikipedia.org/wiki/Hyper-V) (bundled with Windows 10)
+    * [Docker](https://www.docker.com/)
+* [ChefDK](https://downloads.chef.io/chefdk/) bundles several tools:
+    * [InSpec](https://www.inspec.io/) - infrastructure compliance test tool
+    * [Test Kitchen](https://kitchen.ci/) - test harness to converge and verify results
+        * `kitchen-ansible` plug-in
+        * `kitchen-docker` plug-in
+    * [Chef](https://www.chef.io/chef/) - change configuration management that uses agents apply desired state
 
-# Get the Project
-cd $home
-git clone https://github.com/darkn3rd/lisa18_test_driven_infra
-cd lisa18_test_driven_infra
-```
+Installation Guides (Win, Mac, Linux):
+  * [INSTALL.md](INSTALL.md)    
 
-#### Installing Directly on Linux
-
-Both Debian and RHEL family of distros will work.  Other Linux solutions can work, but the process is more complex.
-
-This is how you can get this installed on Ubuntu 16.04.
-
-```bash
-##### Add Docker Repo
-DOCKER_REPO="https://download.docker.com/linux/ubuntu"
-curl -fsSL ${DOCKER_REPO}/gpg | sudo apt-key add -
-sudo add-apt-repository \
-  "deb [arch=amd64] ${DOCKER_REPO} \
-  $(lsb_release -cs) \
-  stable"
-sudo apt-get update -qq
-
-##### Prerequisites (just in case)
-sudo apt-get install -y \
-    apt-transport-https \
-    ca-certificates \
-    software-properties-common
-
-##### Install Docker
-sudo apt-get install -y docker-ce
-sudo usermod -aG docker $USER
-
-##### ChefDK
-VER=3.2.30
-PKG=chefdk_${VER}-1_amd64.deb
-PREFIX=https://packages.chef.io/files/stable/chefdk/${VER}
-wget --quiet ${PREFIX}/ubuntu/16.04/${PKG}
-sudo dpkg -i ${PKG}
-
-# Local ChefDK Ruby Gems
-chef gem install kitchen-ansible
-chef gem install kitchen-docker
-
-# Get the project
-cd
-git clone https://github.com/darkn3rd/lisa18_test_driven_infra
-cd lisa18_test_driven_infra
-```
-
-## Running the Tools
+## **Running the Tools**
 
 Once you you have the requirements installed, you can navigate to the target directory, and run the tools.
 
@@ -142,7 +96,7 @@ These instructions assume you are running it on the host and from the current di
 
 **Note**: These are instructions are for POSIX shell.
 
-### Testing Apache2 configured by Chef
+### **Testing Apache2 configured by Chef**
 
 ```bash
 pushd chef/cookbooks/ez_apache
@@ -152,19 +106,19 @@ kitchen create
 # Fix SSH private key (just in case)
 chmod 600 .kitchen/docker_id_rsa
 # Configure and Test
-kitchen converge 
+kitchen converge
 kitchen verify
 # Fix Scripts
 vi recipes/default.rb
 # Configure and Test
-kitchen converge 
+kitchen converge
 kitchen verify
 # Cleanup
 kitchen destroy
 popd
 ```
 
-### Testing MySQL configured by Chef
+### **Testing MySQL configured by Chef**
 
 ```bash
 pushd chef/cookbooks/ez_mysql
@@ -174,19 +128,19 @@ kitchen create
 # Fix SSH private key (just in case)
 chmod 600 .kitchen/docker_id_rsa
 # Configure and Test
-kitchen converge 
+kitchen converge
 kitchen verify
 # Fix Scripts
 vi recipes/default.rb
 # Configure and Test
-kitchen converge 
+kitchen converge
 kitchen verify
 # Cleanup
 kitchen destroy
 popd
 ```
 
-### Testing Apache2 configured by Ansible
+### **Testing Apache2 configured by Ansible**
 
 ```bash
 pushd ansible/roles/ez_apache
@@ -196,19 +150,19 @@ kitchen create
 # Fix SSH private key (just in case)
 chmod 600 .kitchen/docker_id_rsa
 # Configure and Test
-kitchen converge 
+kitchen converge
 kitchen verify
 # Fix Scripts
 vi tasks/main.yml
 # Configure and Test
-kitchen converge 
+kitchen converge
 kitchen verify
 # Cleanup
 kitchen destroy
 popd
 ```
 
-### Testing MySQL configured by Ansible
+### **Testing MySQL configured by Ansible**
 
 ```bash
 pushd ansible/roles/ez_mysql
@@ -218,12 +172,12 @@ kitchen create
 # Fix SSH private key (just in case)
 chmod 600 .kitchen/docker_id_rsa
 # Configure and Test
-kitchen converge 
+kitchen converge
 kitchen verify
 # Fix Scripts
 vi tasks/main.yml
 # Configure and Test
-kitchen converge 
+kitchen converge
 kitchen verify
 # Cleanup
 kitchen destroy
