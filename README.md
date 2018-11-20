@@ -8,13 +8,15 @@ The idea is that you would first experiment, model, and build out your infrastru
 
 ## **Topics**
 
-In this material, we will build web-database services in two change configuration systems: Chef and Ansible, and then use InSpec to verify that these were created as desired.  We will turn three categories of tests:
+In this material, we will build web-database services in two change configuration systems: [Chef](https://www.chef.io/chef/) and [Ansible](https://www.ansible.com/), and then use [InSpec](https://www.inspec.io/) to verify that these were created as desired.  Tests are organized into three categories:
 
 * **Contract Tests (Promise)** - can the service respond as expected
 * **Conformance Test** - a platform should meet the needs to host the application, e.g. apache modules required, mysql databases created, etc.
 * **Security Tests** - follow best practices to secure the application
 
 ## **Slide Deck**
+
+This is the slide deck used during [LISA18 Conference](https://www.usenix.org/conference/lisa18).
 
 * https://slides.com/devopsstudio/lisa18_tdi
 
@@ -32,16 +34,15 @@ These scripts are written explicitly for Ubuntu 16.04, so you will need either v
 
 I recommend using [Docker](https://www.docker.com/) as it is faster than running full virtual machines, and more suitable for CI solution like [Jenkins](https://jenkins.io/).
 
-In this scenario, [Docker](https://www.docker.com/) is used as _virtual_ virtual machines, not the common application usage, where one process stands up the container.  These scripts should work in either environment, and workaround common gotchas.
-
+In this scenario, [Docker](https://www.docker.com/) is used as _virtual_ virtual machines, not the common application usage, where one process stands up the container.  These scripts should work in either environment, and workaround common problems.
 
 ## **Setup: Easy Way - Vagrant**
 
 An easy way to run this is with a self-contained environment using  [Vagrant](http://vagrantup.com/).
 
-This setup will use [Virualbox](https://www.virtualbox.org/), or [Hyper-V](https://en.wikipedia.org/wiki/Hyper-V) on Windows.  
+This setup has _intelligent defaults_ to select [Virualbox](https://www.virtualbox.org/), or [Hyper-V](https://en.wikipedia.org/wiki/Hyper-V) on Windows.  This default behavior can be changed using `VBOX_PROVIDER` environment variable.
 
-When running this the first time, it will take time to first download Ubuntu 16.04 vagrant box, and then subsequently install Docker and ChefDK. With Hyper-V, you'll be prompted to supply credentials, select virtual switch, etc.
+When running this the first time, it will take time to first download Ubuntu 16.04 vagrant box, and then subsequently install [Docker](https://www.docker.com/) and [ChefDK](https://downloads.chef.io/chefdk/). With [Hyper-V](https://en.wikipedia.org/wiki/Hyper-V), you'll be prompted to supply credentials, select virtual switch, etc.
 
 ### **Steps**
 

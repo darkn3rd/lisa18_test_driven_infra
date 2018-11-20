@@ -1,6 +1,12 @@
 ---
+<% @socket = ENV['DOCKER_HOST'] ||
+     RUBY_PLATFORM =~ /mingw32/ ?
+       'npipe:////./pipe/docker_engine' :
+       'unix:///var/run/docker.sock'
+%>
 driver:
   name: docker
+  socket: <%= @socket %>
 
 provisioner:
   name: chef_zero
